@@ -1,1 +1,23 @@
-{"name":"1","grade1":1.0,"grade2":1.0,"grade3":1.0,"grade4":1.0}
+[
+  {
+    "name": "1",
+    "grade1": 1.0,
+    "grade2": 1.0,
+    "grade3": 1.0,
+    "grade4": 1.0
+  },
+  {
+    "name": "2",
+    "grade1": 2.0,
+    "grade2": 2.0,
+    "grade3": 2.0,
+    "grade4": 2.0
+  },
+  {
+    "name": "1",
+    "grade1": 2.0,
+    "grade2": 2.0,
+    "grade3": 2.0,
+    "grade4": 2.0
+  }
+]

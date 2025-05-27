@@ -1,11 +1,11 @@
-import com.google.gson.Gson;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 public class Student {
-    String name;
-    double grade1, grade2, grade3, grade4;
+    private String name;
+    private double grade1, grade2, grade3, grade4;
 
     public Student(String name, double grade1, double grade2, double grade3, double grade4) {
         this.name = name;
@@ -30,6 +30,26 @@ public class Student {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public double getGrade1() {
+        return grade1;
+    }
+
+    public double getGrade2() {
+        return grade2;
+    }
+
+    public double getGrade3() {
+        return grade3;
+    }
+
+    public double getGrade4() {
+        return grade4;
+    }
+
     public static void calculateMedia(Scanner input) {
         System.out.print("|  Student Name: ");
         String name = input.nextLine();
@@ -46,13 +66,28 @@ public class Student {
         System.out.print("|  Grade 4: ");
         double grade4 = input.nextDouble();
         input.nextLine();
-
         Student student = new Student(name, grade1, grade2, grade3, grade4);
 
-        try (FileWriter writer = new FileWriter("student.json")) {
-            Gson gson = new Gson();
-            gson.toJson(student, writer);
-            System.out.println("Saved!");
+        try {
+            File file = new File("student.json");
+            List<Student> students = new ArrayList<>();
+
+            if (file.exists()) {
+                try (Reader reader = new FileReader(file)) {
+                    students = new Gson().fromJson(reader,
+                            new TypeToken<List<Student>>() {}.getType());
+                    if (students == null) students = new ArrayList<>();
+                }
+            }
+
+            students.add(student);
+
+            try (Writer writer = new FileWriter("student.json")) {
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                gson.toJson(students, writer);
+                System.out.println("Saved!");
+            }
+
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -65,7 +100,39 @@ public class Student {
         System.out.println("|  Media: " + String.format("%.2f", media));
         System.out.println("|  Status: " + status);
         System.out.println();
-        System.out.println("[!] Press enter to continue\n\n");
+        System.out.println("[!] Press enter to continue\n");
         input.nextLine();
+    }
+
+    public static void showStudents() {
+        try {
+            File file = new File("student.json");
+            List<Student> students = new ArrayList<>();
+
+            if (file.exists()) {
+                try (Reader reader = new FileReader(file)) {
+                    students = new Gson().fromJson(reader,
+                            new TypeToken<List<Student>>() {}.getType());
+                    if (students == null) students = new ArrayList<>();
+                }
+
+                for (Student student : students) {
+                    System.out.println("Name: " + student.getName());
+                    System.out.println("Grade 1: " + student.getGrade1());
+                    System.out.println("Grade 2: " + student.getGrade2());
+                    System.out.println("Grade 3: " + student.getGrade3());
+                    System.out.println("Grade 4: " + student.getGrade4());
+                    System.out.println("Media: " + String.format("%.2f", student.average()));
+                    System.out.println("Status: " + student.getStatus());
+                    System.out.println("-----");
+                }
+
+            } else {
+                System.out.println("[!] Error: file not founded.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("[!] Error: reading file: " + e.getMessage());
+        }
     }
 }

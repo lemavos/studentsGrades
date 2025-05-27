@@ -17,7 +17,7 @@ public class Main {
             if (option == '1') {
                 Student.calculateMedia(input);
             } else if (option == '2') {
-                System.out.println("bahhhh");
+                Student.showStudents();
             } else if (option != '3') {
                 System.out.println("Invalid Option!");
             }

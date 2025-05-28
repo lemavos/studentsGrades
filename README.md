@@ -14,35 +14,50 @@
 ## Technologies Used
 
 - Java (JDK 17 or higher recommended)
+- Gson (for JSON parsing)
 - Terminal / Console
 
-## How to Compile and Run
+## 📦 How to Compile and Run
 
 ### Requirements
 
-- Java JDK must be installed on your system. To check:
-  ```bash
-  java -version
-  ```
+- Java JDK 17 or higher installed.
+- [Gson library](https://github.com/google/gson) `.jar` file downloaded.
 
-### Compile
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/lemavos/studentsGrades.git
-   cd studentsGrades
-   ```
-
-2. Compile the Java files:
-   ```bash
-   javac src/*.java
-   ```
-
-### Run
+### 1. Clone the repository:
 
 ```bash
-java src/Main
+git clone https://github.com/lemavos/studentsGrades.git
+cd studentsGrades
 ```
+
+### 2. Download Gson
+
+Download the JAR file (e.g., `gson-2.10.1.jar`) from:
+
+> https://repo1.maven.org/maven2/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar
+
+Place it in the project root or in a `lib/` folder.
+
+### 3. Compile the Java files:
+
+```bash
+javac -cp gson-2.10.1.jar -d bin src/*.java
+```
+
+> If using a `lib/` folder:  
+> `javac -cp lib/gson-2.10.1.jar -d bin src/*.java`
+
+### 4. Run the program:
+
+```bash
+java -cp gson-2.10.1.jar:bin Main
+```
+
+> On Windows, replace `:` with `;`:
+> ```bash
+> java -cp gson-2.10.1.jar;bin Main
+> ```
 
 ## Example Usage
 
